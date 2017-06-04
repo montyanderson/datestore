@@ -1,9 +1,18 @@
 pragma solidity ^0.4.10;
 
 contract DateStore {
+    address owner;
     uint64[] dates;
 
+    function DateStore() public {
+        owner = msg.sender;
+    }
+
     function push(uint64 d) external returns (uint) {
+        if(owner != msg.sender) {
+            return 0;
+        }
+
         uint i = dates.length++;
         dates[i] = d;
         return i;
